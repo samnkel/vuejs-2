@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>KAAPSTAD KOS FESTIVE</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial;
+       background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    }
+   .heading{
+    color: aqua;
+    background-color: black;
+    width:100%;
+    padding:15px;
+    margin-bottom: 30px;
+    justify-content: center;
+   }
+    #app > div {
+      display: inline-block;
+      border: dashed black 1px;
+      padding: 20px;
+      margin: 30px;
+      width: 350px;
+      text-align: center;
+      border-radius: 10px;
+    }
+
+    h1 {
+      margin-bottom: 5px;
+    }
+
+    .benefits-list {
+      text-align: left;
+      margin: 0 auto;
+      width: 80%;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      background: black;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 5px;
+      margin: 50px;
+    }
+
+    .fav-btn.active {
+      background: gold;
+      color: black;
+    }
+
+  </style>
+</head>
+<body>
+<header class="heading">
+<h1>KAAPSTAD KOS FESTIVE</h1>
+<p>FOOD LOVERS TURF</p>
+</header>
+<div id="app">
+  <div  v-for="(x, index) in tiers"
+  :key="index"
+  :style="{ backgroundColor: x.bgColor }">
+
+    <header>
+      <h1>{{ x.name }}</h1>
+    </header>
+
+    <section>
+      <h3>R{{ x.price }}</h3>
+      <p>{{ x.description }}</p>
+
+      <!-- Display benefits as a list -->
+      <ul class="benefits-list">
+        <li v-for="(item, i) in x.benefits" :key="i">
+          {{ item }}
+        </li>
+      </ul>
+    </section>
+
+    <footer>
+      <!-- favourite toggle -->
+      <button 
+        :class="['fav-btn', { active: x.favourited }]"
+        @click="toggleFav(index)"
+      >
+        {{ x.favourited ? "Added ✔" : "Add to favourites ★" }}
+      </button>
+    </footer>
+
+  </div>
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        tiers: [
+          {
+            name: 'BRONZE',
+            price: '250',
+            description:
+              'A great entry-level pass for anyone wanting to soak up the sights, flavours, and sounds of Cape Town Food Fest.',
+            benefits: [
+              'Access to full festival grounds',
+              'Live cooking demos',
+              'Food stalls & vendor markets',
+              'Live music and entertainment',
+              'Perfect for casual festival-goers'
+            ],
+            favourited: false,
+             bgColor: '#f7e1b5'
+          },
+
+          {
+            name: 'SILVER',
+            price: '450',
+            description:
+              'Ideal for food lovers looking for extra flavour and a more curated festival experience.',
+            benefits: [
+              'All Bronze benefits',
+              'Priority seating at cooking demos',
+              '1 complimentary tasting platter',
+              'Fast-lane entry for select stalls',
+              'Meet-the-Chefs viewing area'
+            ],
+            favourited: false,
+             bgColor: '#d9d9d9'
+          },
+
+          {
+            name: 'GOLD',
+            price: '800',
+            description:
+              'The premium way to experience Cape Town Food Fest. Enjoy VIP access, gourmet perks, and the best seats in the house.',
+            benefits: [
+              'All Silver benefits',
+              'VIP lounge access',
+              '2 gourmet meals + drinks',
+              'Front-row masterclass seating',
+              'Private meet-&-greet with chefs',
+              'VIP welcome gift bag'
+            ],
+            favourited: false,
+             bgColor: '#f7d768'
+          }
+        ]
+      };
+    },
+
+    methods: {
+      toggleFav(index) {
+        this.tiers[index].favourited = !this.tiers[index].favourited;
+      }
+    }
+  });
+
+  app.mount('#app');
+</script>
+
+</body>
+</html>
